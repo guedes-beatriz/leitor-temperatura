@@ -1,14 +1,27 @@
 #include <Arduino.h>
 #include <DHT.h>
+#include <WiFi.h>
+#include <WebServer.h> //colocamos bibliotecas do wifi e do server
+#include "index.h"
+#include "ligado.h"  //colocou as paginas da interface no código
+#include "desligado.h"
+#include "automatico.h"
+
+//conexão do wifi
+const char* ssid = "FAMILIA GUEDES1";
+const char* password = "CarlosHenrique1604";
+
+//criar o webserver
+WebServer server(80);
 
 // Pinos dos componentes
 #define DHTPIN 4
 #define DHTTYPE DHT11
 #define PINO_BUZZER 18
 
-#define LED1 33
-#define LED2 32
-#define LED3 27
+#define LED1 27 //amarelo
+#define LED2 33 //verde
+#define LED3 32 //azul
 
 // Modos de funcionamento
 #define MODO_DESLIGADO  0
@@ -20,6 +33,8 @@ int modo = MODO_LIGADO;
 
 // Limite de temperatura para acionar o buzzer (em °C)
 const float LIMITE_TEMPERATURA = 30.0;
+float temp = 0.0;
+float umid = 0.0;
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -29,6 +44,45 @@ const unsigned long intervaloLeitura = 2000;
 
 void setup() {
   Serial.begin(115200);
+
+  // pagina inicial 
+  server.on("/", []() {
+    server.send(200, "text/html", pagina_html);
+  });
+
+  // 2. quando o usuário entrar em /ligado
+  server.on("/ligado", []() {
+    modo = MODO_LIGADO; // Muda o modo dos LEDs/sensor para Ligado
+    server.send(200, "text/html", pagina_ligado); // Entrega a tela do ligado.h
+  });
+
+  // 3. quando o usuário entrar em /automatico
+  server.on("/automatico", []() {
+    modo = MODO_AUTOMATICO; // Muda o modo dos LEDs/sensor para Automático
+    server.send(200, "text/html", pagina_automatico); // Entrega a tela do automatico.h
+  });
+
+  // 4. quando o usuário entrar em /desligado
+  server.on("/desligado", []() {
+    modo = MODO_DESLIGADO; // Muda o modo dos LEDs/sensor para Desligado
+    server.send(200, "text/html", pagina_desligado); // Entrega a tela do desligado.h
+  });
+
+  // 5. rota que entrega a temperatura e umidade em tempo real (JSON)
+  server.on("/dados", []() {
+    String json = "{\"temperatura\":" + String(temp, 1) + ",\"umidade\":" + String(umid, 1) + "}";
+    server.send(200, "application/json", json);
+  });
+
+WiFi.begin(ssid, password);
+while (WiFi.status() != WL_CONNECTED) {
+  delay(500);
+  Serial.print(".");
+}
+Serial.print("\nConectado! IP da ESP32: ");
+Serial.println(WiFi.localIP()); // Para você saber qual IP digitar no navegador!
+
+  server.begin();
 
   // pinos
   pinMode(PINO_BUZZER, OUTPUT);
@@ -46,21 +100,7 @@ void setup() {
 }
 
 void loop() {
-  //teste para mudança de modos(provisório)
-  if (Serial.available() > 0) {
-    char comando = Serial.read();
-
-    if (comando == '0') {
-      modo = MODO_DESLIGADO;
-      Serial.println("\n [TESTE] Modo alterado para: 0 (DESLIGADO)");
-    } else if (comando == '1') {
-      modo = MODO_LIGADO;
-      Serial.println("\n [TESTE] Modo alterado para: 1 (LIGADO)");
-    } else if (comando == '2') {
-      modo = MODO_AUTOMATICO;
-      Serial.println("\n [TESTE] Modo alterado para: 2 (AUTOMÁTICO)");
-    }
-  }
+  server.handleClient();
 
   unsigned long tempoAtual = millis();
 
@@ -75,7 +115,7 @@ void loop() {
 
     case MODO_LIGADO:
       // 2 LEDs ligados
-      digitalWrite(LED1, HIGH);
+      digitalWrite(LED1, LOW);
       digitalWrite(LED2, HIGH);
       digitalWrite(LED3, LOW);
 
@@ -89,6 +129,8 @@ void loop() {
         if (isnan(temperatura) || isnan(umidade)) {
           Serial.println("Erro ao ler o sensor DHT11!");
         } else {
+          temp = temperatura;
+          umid = umidade;
           Serial.print("Temperatura: ");
           Serial.print(temperatura, 1);
           Serial.print(" °C | Umidade: ");
@@ -109,8 +151,8 @@ void loop() {
       break;
 
     case MODO_AUTOMATICO:
-      digitalWrite(LED1, HIGH);
-      digitalWrite(LED2, HIGH);
+      digitalWrite(LED1, LOW);
+      digitalWrite(LED2, LOW);
       digitalWrite(LED3, HIGH);
 
       // Lê e mostra temperatura e umidade a cada 2 segundos
@@ -123,6 +165,8 @@ void loop() {
         if (isnan(temperatura) || isnan(umidade)) {
           Serial.println("Erro ao ler o sensor DHT11!");
         } else {
+          temp = temperatura;
+          umid = umidade;
           Serial.print("Temperatura: ");
           Serial.print(temperatura, 1);
           Serial.print(" °C | Umidade: ");

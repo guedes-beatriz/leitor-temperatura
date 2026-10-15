@@ -230,12 +230,12 @@ const char pagina_automatico[] PROGMEM = R"rawliteral(
     <h2 class="troca-operacao">Trocar modo de operação</h2>
 
     <div class="card-fim">
-        <div class="fim-ligado">
+        <div class="fim-ligado" onclick="window.location.href='/ligado'">
             <i data-lucide="power"></i>
             LIGADO
         </div>
 
-        <div class="fim-desligado">
+        <div class="fim-desligado" onclick="window.location.href='/desligado'">
             <i data-lucide="power-off"></i>
             DESLIGADO
         </div>

@@ -93,7 +93,7 @@ const char pagina_html[] PROGMEM = R"rawliteral(
     <h2 class="sub-texto">Selecione o modo de funcionamento</h2>
 
     <!-- CARD LIGADO -->
-    <div class="card">
+    <div class="card" onclick="window.location.href='/ligado'">
         <div class="card-topo">
             <i data-lucide="power"></i>
             <h2 class="ligado">LIGADO</h2>
@@ -106,7 +106,7 @@ const char pagina_html[] PROGMEM = R"rawliteral(
     </div>
 
     <!-- CARD AUTOMÁTICO -->
-    <div class="card">
+    <div class="card" onclick="window.location.href='/automatico'">
         <div class="card-topo">
             <i data-lucide="refresh-cw"></i>
             <h2 class="automatico">AUTOMÁTICO</h2>
@@ -118,7 +118,7 @@ const char pagina_html[] PROGMEM = R"rawliteral(
     </div>
 
     <!-- CARD DESLIGADO -->
-    <div class="card">
+    <div class="card" onclick="window.location.href='/desligado'">
         <div class="card-topo">
             <i data-lucide="power-off"></i>
             <h2 class="desligado">DESLIGADO</h2>

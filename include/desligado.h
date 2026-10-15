@@ -138,12 +138,12 @@ const char pagina_desligado[] PROGMEM = R"rawliteral(
     <h2 class="troca-operacao">Trocar modo de operação</h2>
 
     <div class="card-fim">
-        <div class="fim-ligado">
+        <div class="fim-ligado" onclick="window.location.href='/ligado'">
             <i data-lucide="power"></i>
             LIGADO
         </div>
 
-        <div class="fim-automatico">
+        <div class="fim-automatico" onclick="window.location.href='/automatico'">
             <i data-lucide="refresh-cw"></i>
             AUTOMÁTICO
         </div>
