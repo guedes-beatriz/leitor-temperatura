@@ -13,14 +13,12 @@ const char pagina_ligado[] PROGMEM = R"rawliteral(
 
     <title>Modo Ligado</title>
 
-    <!-- Icones Lucide -->
+    <!-- Ícones usados -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
-    <!-- Fonte Sora e CSS -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
 
-        /* PAGINA DE MONITORAMENTO */
         body {
             background-color: #D0D0D0;
             min-height: 100vh;
@@ -38,7 +36,6 @@ const char pagina_ligado[] PROGMEM = R"rawliteral(
             top: -22px;
         }
 
-        /* IDENTIFICACAO DO MODO LIGADO */
         .modo-ligado {
             position: relative;
             top: -40px;
@@ -49,13 +46,13 @@ const char pagina_ligado[] PROGMEM = R"rawliteral(
             align-items: center;
             gap: 6px;
             width: fit-content;
-            background-color: #A5D294;
+            background-color: #B5F5C1;
             color: #070000;
             padding: 12px 6px;
             border-radius: 12px;
             text-align: center;
             margin: 0 auto;
-            border: 1px solid #155800;
+            border: 1px solid #009C24;
         }
 
         .modo-ligado i {
@@ -72,70 +69,41 @@ const char pagina_ligado[] PROGMEM = R"rawliteral(
             transform: translateY(-1px);
         }
 
-        /* CARDS DE TEMPERATURA E UMIDADE */
         .cards-meio {
             display: flex;
-            flex-direction: row;
             justify-content: center;
-            align-items: stretch;
             gap: 20px;
+            position: relative;
+            top: -20px;
         }
 
         .meio-temperatura,
         .meio-umidade {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             background-color: white;
             border: 1px solid #BDBDBD;
-            border-radius: 20px;
-            padding: 20px;
-            width: 250px;
-            height: 150px;
-            box-sizing: border-box;
-        }
-
-        .meio-temperatura i,
-        .meio-umidade i {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .meio-temperatura svg,
-        .meio-umidade svg {
-            width: 100% !important;
-            height: 20px !important;
-            flex-shrink: 0;
-            display: block;
-            transform: translateY(-1px);
-            color: #666666;
-            stroke: #666666;
-        }
-
-        .texto-temperatura,
-        .texto-umidade {
+            border-radius: 15px;
+            width: 280px;
+            height: 180px;
+            gap: 10px;
             font-family: 'Sora', sans-serif;
-            font-size: 80%;
-            font-weight: 400;
-            color: #666666;
-            display: flex;
-            margin-top: 2%;
-            align-items: center;
-            justify-content: center;
         }
 
         .valor-temperatura,
         .valor-umidade {
-            font-family: 'Sora', sans-serif;
-            font-size: 50px;
-            font-weight: 700;
-            color: #000000;
-            display: flex;
-            align-items: center;
-            height: 80px;
-            text-align: center;
-            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
         }
 
-        /* TROCA DE OPERACAO */
+        .texto-temperatura,
+        .texto-umidade {
+            font-size: 16px;
+            font-weight: 400;
+        }
+
         .troca-operacao {
             display: flex;
             font-family: 'Sora', sans-serif;
@@ -147,7 +115,6 @@ const char pagina_ligado[] PROGMEM = R"rawliteral(
             margin-left: 40px;
         }
 
-        /* CARDS DOS MODOS */
         .card-fim {
             display: flex;
             flex-direction: column;
@@ -175,8 +142,6 @@ const char pagina_ligado[] PROGMEM = R"rawliteral(
             font-weight: 600;
             cursor: pointer;
         }
-
-
     </style>
 </head>
 

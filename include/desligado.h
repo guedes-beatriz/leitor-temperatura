@@ -1,4 +1,3 @@
-
 #ifndef DESLIGADO_H
 #define DESLIGADO_H
 
