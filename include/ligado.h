@@ -183,6 +183,19 @@ const char pagina_ligado[] PROGMEM = R"rawliteral(
 
     <script>
         lucide.createIcons();
+
+        function atualizarLeituras() {
+            fetch('/dados')
+                .then(resposta => resposta.json())
+                .then(dados => {
+                    document.querySelector('.valor-temperatura').innerText = dados.temperatura + "°C";
+                    document.querySelector('.valor-umidade').innerText = dados.umidade + "%";
+                })
+                .catch(erro => console.log("Erro:", erro));
+        }
+
+        setInterval(atualizarLeituras, 2000);
+        atualizarLeituras();
     </script>
 </body>
 </html>
