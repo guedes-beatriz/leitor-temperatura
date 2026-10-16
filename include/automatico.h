@@ -226,6 +226,7 @@ const char pagina_automatico[] PROGMEM = R"rawliteral(
             <span class="texto-umidade">Umidade</span>
         </div>
     </div>
+    <div class="alerta" style="display:none; background:#ffcccc; color:#900; padding:10px; margin-top:15px; border-radius:8px; text-align:center; font-weight:600;">Temperatura alta! Buzzer ativado.</div>
 
     <h2 class="troca-operacao">Trocar modo de operação</h2>
 
@@ -250,6 +251,12 @@ const char pagina_automatico[] PROGMEM = R"rawliteral(
                 .then(dados => {
                     document.querySelector('.valor-temperatura').innerText = dados.temperatura + "°C";
                     document.querySelector('.valor-umidade').innerText = dados.umidade + "%";
+                    const alerta = document.querySelector('.alerta');
+                    if (dados.temperatura > 30) {
+                        alerta.style.display = 'block';
+                    } else if (dados.temperatura <= 28) {
+                        alerta.style.display = 'none';
+                    }
                 })
                 .catch(erro => console.log("Erro:", erro));
         }

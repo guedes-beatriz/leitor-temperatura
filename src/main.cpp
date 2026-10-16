@@ -33,6 +33,7 @@ int modo = MODO_LIGADO;
 
 // Limite de temperatura para acionar o buzzer (em °C)
 const float LIMITE_TEMPERATURA = 30.0;
+const float LIMITE_DESLIGAR = 28.0;      // temperatura para desligar buzzer e alerta
 float temp = 0.0;
 float umid = 0.0;
 
@@ -173,14 +174,11 @@ void loop() {
           Serial.print(umidade, 1);
           Serial.println(" %");
 
-          // Apita o buzzer se a temperatura for igual ou maior ao limite
-          if (temperatura >= LIMITE_TEMPERATURA) {
-            digitalWrite(PINO_BUZZER, HIGH);
-            delay(2000);
-            digitalWrite(PINO_BUZZER, LOW);
-            delay(2000);
-          } else {
-            digitalWrite(PINO_BUZZER, LOW);
+          // controle do buzzer no modo automático
+        if (temperatura >= LIMITE_TEMPERATURA) {
+          digitalWrite(PINO_BUZZER, HIGH);
+          } else if (temperatura <= LIMITE_DESLIGAR) {
+          digitalWrite(PINO_BUZZER, LOW);
           }
         }
       }
