@@ -159,6 +159,11 @@ const char pagina_ligado[] PROGMEM = R"rawliteral(
             <span class="valor-temperatura">00°C</span>
             <span class="texto-temperatura">Temperatura</span>
         </div>
+        <div class="alerta" style="display:none; background:#ffcccc; color:#900; padding:15px; margin-top:15px; border-radius:8px; text-align:center; font-weight:600;">
+    ⚠️ Temperatura alta! Buzzer ativado.<br><br>
+            <a href="/automatico" style="margin-right:15px; background:#15518A; color:white; padding:8px 16px; border-radius:8px; text-decoration:none;">Ir para Automático</a>
+            <a href="/desligado" style="background:#555; color:white; padding:8px 16px; border-radius:8px; text-decoration:none;">Ir para Desligado</a>
+        </div>
 
         <div class="meio-umidade">
             <i data-lucide="droplets"></i>
@@ -190,6 +195,12 @@ const char pagina_ligado[] PROGMEM = R"rawliteral(
                 .then(dados => {
                     document.querySelector('.valor-temperatura').innerText = dados.temperatura + "°C";
                     document.querySelector('.valor-umidade').innerText = dados.umidade + "%";
+                    const alerta = document.querySelector('.alerta');
+                        if (dados.temperatura >= 30) {
+                            alerta.style.display = 'block';
+                        } else {
+                            alerta.style.display = 'none';
+                    }   
                 })
                 .catch(erro => console.log("Erro:", erro));
         }
