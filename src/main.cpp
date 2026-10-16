@@ -8,8 +8,8 @@
 #include "automatico.h"
 
 //conexão do wifi
-const char* ssid = "FAMILIA GUEDES1";
-const char* password = "CarlosHenrique1604";
+const char* ssid = "NOMEDAREDE";
+const char* password = "SENHADAREDE";
 
 //criar o webserver
 WebServer server(80);
