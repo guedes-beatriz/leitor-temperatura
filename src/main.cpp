@@ -7,8 +7,8 @@
 #include "desligado.h"
 #include "automatico.h"
 
-const char* ssid = "NOMEDAREDE";
-const char* password = "SENHADAREDE";
+const char* ssid = "NOMEDOWIFI";
+const char* password = "SENHADOWIFI";
 
 WebServer server(80);
 
@@ -128,11 +128,6 @@ void loop() {
         } else {
           temp = temperatura;
           umid = umidade;
-          Serial.print("Temperatura: ");
-          Serial.print(temperatura, 1);
-          Serial.print(" °C | Umidade: ");
-          Serial.print(umidade, 1);
-          Serial.println(" %");
 
           // Apita o buzzer se a temperatura for igual ou superior ao limite
         if (temperatura >= LIMITE_TEMPERATURA) {
@@ -162,11 +157,6 @@ void loop() {
         } else {
           temp = temperatura;
           umid = umidade;
-          Serial.print("Temperatura: ");
-          Serial.print(temperatura, 1);
-          Serial.print(" °C | Umidade: ");
-          Serial.print(umidade, 1);
-          Serial.println(" %");
 
           // controle do buzzer no modo automático
         if (temperatura >= LIMITE_TEMPERATURA) {
